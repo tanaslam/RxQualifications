@@ -1,23 +1,21 @@
-package uk.co.crystalcube.aatemplate.ui;
+package uk.co.crystalcube.qualifications.ui;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.EActivity;
 
-import uk.co.crystalcube.aatemplate.MainFragment_;
-import uk.co.crystalcube.aatemplate.R;
+import java.util.Objects;
+
+import uk.co.crystalcube.qualifications.R;
+import uk.co.crystalcube.qualifications.model.Qualification;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity
+            implements AbstractListFragment.OnListItemListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +24,7 @@ public class MainActivity extends ActionBarActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, MainFragment_.builder().build())
+                    .add(R.id.container, QualificationsFragment_.builder().build())
                     .commit();
         }
     }
@@ -52,4 +50,14 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onClick(Object qualification) {
+
+        Toast.makeText(this, "Item clicked", Toast.LENGTH_LONG).show();
+
+        String id = ((Qualification) qualification).getId();
+        SubjectsActivity_.intent(this).qualificationId(id).start();
+    }
+
 }

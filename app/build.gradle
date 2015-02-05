@@ -6,7 +6,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "uk.co.crystalcube.aatemplate"
+        applicationId "uk.co.crystalcube.qualifications"
         minSdkVersion 17
         targetSdkVersion 21
         versionCode 1
@@ -34,7 +34,7 @@ android {
 apt {
     arguments {
         androidManifestFile variant.outputs[0].processResources.manifestFile
-        resourcePackageName 'uk.co.crystalcube.aatemplate'
+        resourcePackageName 'uk.co.crystalcube.qualifications'
     }
 }
 

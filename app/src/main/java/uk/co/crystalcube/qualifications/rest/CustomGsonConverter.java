@@ -1,4 +1,4 @@
-package uk.co.crystalcube.aatemplate.rest;
+package uk.co.crystalcube.qualifications.rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

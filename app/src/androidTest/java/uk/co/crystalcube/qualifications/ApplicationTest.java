@@ -1,4 +1,4 @@
-package uk.co.crystalcube.aatemplate;
+package uk.co.crystalcube.qualifications;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

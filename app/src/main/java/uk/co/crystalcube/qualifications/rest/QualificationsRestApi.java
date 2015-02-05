@@ -1,13 +1,21 @@
-package uk.co.crystalcube.aatemplate.rest;
+package uk.co.crystalcube.qualifications.rest;
 
 import org.androidannotations.annotations.rest.Accept;
 import org.androidannotations.annotations.rest.Get;
+import org.androidannotations.annotations.rest.Head;
 import org.androidannotations.annotations.rest.Rest;
 import org.androidannotations.api.rest.MediaType;
 import org.androidannotations.api.rest.RestClientErrorHandling;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+
+import uk.co.crystalcube.qualifications.model.Qualification;
+import uk.co.crystalcube.qualifications.model.Qualifications;
+import uk.co.crystalcube.qualifications.model.Subject;
 
 /**
  * Created by tanny on 04/02/15.
@@ -19,7 +27,7 @@ import org.springframework.web.client.RestTemplate;
                 FormHttpMessageConverter.class},
 
         interceptors = {CustomRequestInterceptor.class})
-public interface TemplateRestApi extends RestClientErrorHandling {
+public interface QualificationsRestApi extends RestClientErrorHandling {
 
     /**
      * Root URL of back-end REST API.
@@ -46,13 +54,20 @@ public interface TemplateRestApi extends RestClientErrorHandling {
      */
     void setRestTemplate(RestTemplate restTemplate);
 
+    @Head("/api/v4/qualifications")
+    HttpHeaders getQualificationHeaders();
+
     /**
-     * Get a dummy object from back-end, replace template params accordingly.
+     * Get a list of qualifications from back-end RESTful API.
      *
-     * @param id unique identifier of the object
-     * @return Model object parsed from JSON
+     * @return Model object that wraps up list of of qualifications
      */
-    @Get("/object/{id}")
-    Object getObject(String id);
+    @Get("/api/v4/qualifications")
+    List<Qualification> getQualifications();
+
+
+    @Get("/api/v4/qualifications/{qualificationId}")
+    Qualification getQualification(String qualificationId);
+
 }
 
