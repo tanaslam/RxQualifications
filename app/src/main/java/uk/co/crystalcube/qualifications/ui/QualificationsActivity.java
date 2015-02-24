@@ -14,7 +14,7 @@ import uk.co.crystalcube.qualifications.R;
 import uk.co.crystalcube.qualifications.model.Qualification;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends ActionBarActivity
+public class QualificationsActivity extends ActionBarActivity
             implements AbstractListFragment.OnListItemListener {
 
     @Override
@@ -24,8 +24,8 @@ public class MainActivity extends ActionBarActivity
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, QualificationsFragment_.builder().build())
-                    .commit();
+                    .add(R.id.container, QualificationsFragment_.builder().build(),
+                            QualificationsFragment_.class.getSimpleName()).commit();
         }
     }
 

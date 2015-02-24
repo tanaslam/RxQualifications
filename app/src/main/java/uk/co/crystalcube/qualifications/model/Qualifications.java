@@ -21,7 +21,7 @@ public class Qualifications {
     }
 
     public void setETag(String eTag) {
-        this.eTag = eTag;
+        this.eTag = eTag == null ? "" : eTag;
     }
 
     public List<Qualification> getQualificationList() {
@@ -29,6 +29,9 @@ public class Qualifications {
     }
 
     public void setQualificationList(List<Qualification> qualificationList) {
+        if(qualificationList == null)
+            return;
+
         this.qualificationList = qualificationList;
     }
 

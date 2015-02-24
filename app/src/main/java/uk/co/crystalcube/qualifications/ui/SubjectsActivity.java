@@ -30,8 +30,8 @@ public class SubjectsActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, SubjectsFragment_
-                            .builder().qualificationId(qualificationId).build())
-                    .commit();
+                            .builder().qualificationId(qualificationId).build(),
+                            SubjectsFragment_.class.getSimpleName()).commit();
         }
     }
 

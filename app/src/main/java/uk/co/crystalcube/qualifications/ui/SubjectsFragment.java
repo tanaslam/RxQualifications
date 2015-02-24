@@ -63,7 +63,7 @@ public class SubjectsFragment extends AbstractListFragment {
 
         @Override
         public int getCount() {
-            return subjectList.size();
+            return subjectList == null ? 0 : subjectList.size();
         }
 
         @Override
