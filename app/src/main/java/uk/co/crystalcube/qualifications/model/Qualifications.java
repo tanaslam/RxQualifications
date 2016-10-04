@@ -1,18 +1,15 @@
 package uk.co.crystalcube.qualifications.model;
 
-import org.androidannotations.annotations.EBean;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by tanny on 04/02/15.
+ * Created by Tanveer Aslam on 02/10/16.
  */
-@EBean(scope = EBean.Scope.Singleton)
 public class Qualifications {
 
     /** ETag header value */
-    private String eTag = "";
+    private String eTag;
 
     private List<Qualification> qualificationList = new ArrayList<>();
 
@@ -21,7 +18,7 @@ public class Qualifications {
     }
 
     public void setETag(String eTag) {
-        this.eTag = eTag == null ? "" : eTag;
+        this.eTag = eTag;
     }
 
     public List<Qualification> getQualificationList() {

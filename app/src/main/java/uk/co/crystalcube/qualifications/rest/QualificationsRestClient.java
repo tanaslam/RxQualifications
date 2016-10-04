@@ -2,84 +2,93 @@ package uk.co.crystalcube.qualifications.rest;
 
 import android.util.Log;
 
-import org.androidannotations.annotations.AfterInject;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.rest.RestService;
-import org.androidannotations.api.rest.RestErrorHandler;
-import org.springframework.core.NestedRuntimeException;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.client.RestClientException;
-
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.util.List;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSession;
-
+import okhttp3.Headers;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import uk.co.crystalcube.qualifications.model.Qualification;
-import uk.co.crystalcube.qualifications.model.Qualifications;
 
 /**
- * Created by tanny on 04/02/15.
+ * Created by Tanveer Aslam on 24/09/16.
  */
 
-@EBean (scope = EBean.Scope.Singleton)
-public class QualificationsRestClient implements RestErrorHandler {
+public final class QualificationsRestClient {
 
     private static final String LOG_TAG = QualificationsRestClient.class.getSimpleName();
     private static final String ROOT_URL = "https://api.gojimo.net";
 
-    @RestService
-    protected QualificationsRestApi restService;
+    private QualificationsRestApi restService;
 
-    @Bean
-    protected Qualifications qualifications;
+    private QualificationsRestClient() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ROOT_URL)
+                .addConverterFactory(GsonConverterFactory.create()).build();
 
-    @AfterInject
-    void setupRestClient() {
-        restService.setRootUrl(ROOT_URL);
-        restService.setRestErrorHandler(this);
+        restService = retrofit.create(QualificationsRestApi.class);
     }
 
-    public void getQualifications() {
+    public static QualificationsRestClient build() {
+        return new QualificationsRestClient();
+    }
 
-        List<Qualification> response = null;
+    /**
+     * Returns 'ETag' header value.
+     *
+     * @return Etag hash string.
+     * @see QualificationsRestApi#getQualificationHeaders()
+     */
+    public String getQualificationsETag() {
 
         try {
 
-            HttpHeaders headers = restService.getQualificationHeaders();
-            if(qualifications.getETag().equals(headers.getETag())) {
-                return;
+            Call<Response> call = restService.getQualificationHeaders();
+            Headers headers = call.execute().headers();
+            if (headers != null) {
+                return headers.get("ETag");
             }
-
-            response = restService.getQualifications();
-
-            qualifications.setQualificationList(response);
-            qualifications.setETag(headers.getETag());
-
-        } catch (RestClientException e) {
+        } catch (Exception e) {
             Log.e(LOG_TAG, "Rest call failed: an exception occurred", e);
         }
+
+        return null;
     }
 
+    /**
+     * @see QualificationsRestApi#getQualifications()
+     */
+    public List<Qualification> getQualifications() {
+
+        try {
+            Call<List<Qualification>> call = restService.getQualifications();
+            Response<List<Qualification>> response = call.execute();
+            if (response != null) {
+                return response.body();
+            }
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Rest call failed: an exception occurred", e);
+        }
+
+        return null;
+    }
+
+    /**
+     * @see QualificationsRestApi#getQualification(String)
+     */
     public Qualification getQualification(String id) {
 
-        Qualification object = null;
-
         try {
-            object = restService.getQualification(id);
-        } catch (RestClientException e) {
+            Call<Qualification> call = restService.getQualification(id);
+            Response<Qualification> response = call.execute();
+            if (response != null) {
+                return response.body();
+            }
+        } catch (Exception e) {
             Log.e(LOG_TAG, "Rest call failed: an exception occurred", e);
         }
 
-        return object;
-    }
-
-    @Override
-    public void onRestClientExceptionThrown(NestedRuntimeException e) {
-        Log.e(LOG_TAG, "Rest call failed: an exception occurred", e);
+        return null;
     }
 }

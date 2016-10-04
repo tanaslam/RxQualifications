@@ -6,4 +6,6 @@
     <!-- List item dimensions -->
     <dimen name="list_item_padding">8dp</dimen>
     <dimen name="list_item_text_size">16sp</dimen>
+    <dimen name="list_item_icon_width">32dp</dimen>
+    <dimen name="list_item_icon_height">@dimen/list_item_icon_width</dimen>
 </resources>

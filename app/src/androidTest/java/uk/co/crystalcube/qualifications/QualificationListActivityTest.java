@@ -8,20 +8,19 @@ import android.test.UiThreadTest;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.view.View;
 
-import uk.co.crystalcube.qualifications.ui.QualificationsActivity_;
+import uk.co.crystalcube.qualifications.ui.QualificationsActivity;
 import uk.co.crystalcube.qualifications.ui.SubjectsActivity;
-import uk.co.crystalcube.qualifications.ui.SubjectsActivity_;
 
 /**
  * Instrumentation test that test main activity layout composition
  * Created by Tanveer on 16/02/2015.
  */
-public class QualificationListActivityTest extends ActivityInstrumentationTestCase2<QualificationsActivity_> {
+public class QualificationListActivityTest extends ActivityInstrumentationTestCase2<QualificationsActivity> {
 
     private Activity activity;
 
     public QualificationListActivityTest() {
-        super(QualificationsActivity_.class);
+        super(QualificationsActivity.class);
     }
 
     @Override
@@ -71,7 +70,7 @@ public class QualificationListActivityTest extends ActivityInstrumentationTestCa
         // add monitor to check for the second activity
         Instrumentation.ActivityMonitor monitor =
                 getInstrumentation().
-                        addMonitor(SubjectsActivity_.class.getName(), null, false);
+                        addMonitor(SubjectsActivity.class.getName(), null, false);
 
         TouchUtils.clickView(this, activity.findViewById(android.R.id.list));
 

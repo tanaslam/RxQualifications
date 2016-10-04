@@ -5,7 +5,7 @@ import android.test.suitebuilder.TestSuiteBuilder;
 import junit.framework.TestSuite;
 
 /**
- * Created by tanny on 16/02/2015.
+ * Created by Tanveer Aslam on 16/02/2015.
  */
 public class ApplicationTestSuite {
 

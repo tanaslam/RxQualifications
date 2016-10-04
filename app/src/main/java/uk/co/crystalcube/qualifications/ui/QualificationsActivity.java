@@ -1,31 +1,28 @@
 package uk.co.crystalcube.qualifications.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-
-import org.androidannotations.annotations.EActivity;
-
-import java.util.Objects;
 
 import uk.co.crystalcube.qualifications.R;
 import uk.co.crystalcube.qualifications.model.Qualification;
+import uk.co.crystalcube.qualifications.utils.NavigationUtils;
 
-@EActivity(R.layout.activity_main)
-public class QualificationsActivity extends ActionBarActivity
-            implements AbstractListFragment.OnListItemListener {
+public class QualificationsActivity extends AppCompatActivity
+        implements QualificationsFragment.OnQualificationOnItemClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_qualifications);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, QualificationsFragment_.builder().build(),
-                            QualificationsFragment_.class.getSimpleName()).commit();
+                    .add(R.id.container, QualificationsFragment.newInstance(),
+                            QualificationsFragment.FRAG_TAG).commit();
         }
     }
 
@@ -52,12 +49,8 @@ public class QualificationsActivity extends ActionBarActivity
     }
 
     @Override
-    public void onClick(Object qualification) {
-
-        Toast.makeText(this, "Item clicked", Toast.LENGTH_LONG).show();
-
-        String id = ((Qualification) qualification).getId();
-        SubjectsActivity_.intent(this).qualificationId(id).start();
+    public void onItemClick(Qualification qualification) {
+        NavigationUtils.startSubjectActivity(this, qualification);
     }
 
 }

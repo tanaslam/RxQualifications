@@ -8,7 +8,7 @@ public class Subject {
     @Expose
     private String id;
     @Expose
-    private String title;
+    private String name;
     @Expose
     private String link;
     @Expose
@@ -38,7 +38,7 @@ public class Subject {
      *     The title
      */
     public String getTitle() {
-        return title;
+        return name;
     }
 
     /**
@@ -47,7 +47,7 @@ public class Subject {
      *     The title
      */
     public void setTitle(String title) {
-        this.title = title;
+        this.name = title;
     }
 
     /**

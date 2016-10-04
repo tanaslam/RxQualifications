@@ -1,37 +1,29 @@
 package uk.co.crystalcube.qualifications.ui;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
-
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
 
 import uk.co.crystalcube.qualifications.R;
 
-@EActivity(R.layout.activity_subjects)
-public class SubjectsActivity extends ActionBarActivity {
+public class SubjectsActivity extends AppCompatActivity {
 
-    @Extra
-    protected String qualificationId;
+    public static final String KEY_EXTRA_QUALIFICATION_ID = "extra-qualification-id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_subjects);
+
+        String qualificationId = getIntent().getStringExtra(KEY_EXTRA_QUALIFICATION_ID);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, SubjectsFragment_
-                            .builder().qualificationId(qualificationId).build(),
-                            SubjectsFragment_.class.getSimpleName()).commit();
+                    .add(R.id.container, SubjectsFragment.newInstance(qualificationId),
+                            SubjectsFragment.FRAG_TAG).commit();
         }
     }
 
